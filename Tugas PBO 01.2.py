@@ -11,7 +11,7 @@ class Book:
         else:
             print("\nBuku sudah dipinjam.")
     def return_book(self):
-        if self.is_norrowed:
+        if self.is_borrowed:
             self.is_borrowed = False
             print("\nBuku berhasil dikembalikan.")
         else:
@@ -43,7 +43,7 @@ class BorrowTransaction:
         else:
             print("\nTransaksi gagal, buku sedang dipinjam.")
     def return_book(self):
-        if not self.rerturned:
+        if not self.returned:
             self.book.return_book()
             if self.book in self.member.borrowed_books:
                 self.member.borrowed_books.remove(self.book)
@@ -58,4 +58,4 @@ staff1 = staff("Budi", "S001")
 transaksi1 = BorrowTransaction(book1, member1, staff1, "04-03-2026")
 
 transaksi1.borrow_book()
-transaksi1.retrun_book()
+transaksi1.return_book()
