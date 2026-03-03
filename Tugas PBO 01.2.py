@@ -1,62 +1,61 @@
-class Buku:
-    def __init__(self, id_buku, judul, penulis):
-        self.id_buku = id_buku
-        self.judul = judul
-        self.penulis = penulis
-        self.status = "Tersedia"
-
-    def ubah_status(self, status):
-        self.status = status
-
-    def info_buku(self):
-        print(f"ID: {self.id_buku}")
-        print(f"judul {self.judul}")
-        print(f"penulis {self.penulis}")
-        print(f"status {self.status}")
-
-class Anggota:
-    def __init__(self, id_anggota, nama, alamat, no_hp):
-        self.id_anggota = id_anggota
-        self.nama = nama
-        self.alamat = alamat
-        self.no_hp = no_hp
-
-    def info_anggota(self):
-        print(f"ID: {self.id_anggota}")
-        print(f"Nama {self.nama}")
-        print(f"Alamat {self.alamat}")
-        print(f"No_hp {self.no_hp}")
-    
-class Peminjaman:
-    def __init__(self, id_peminjaman, anggota, buku, tanggal_pinjam):
-        self.id_peminjaman = id_peminjaman
-        self.anggota = anggota
-        self.buku = buku
-        self.tanggal_pinjam = tanggal_pinjam
-        self.tanggal_kembali = None
-
-    def pinjam_buku(self):
-        if self.buku.status == "Tersedia":
-            self.buku.ubah_status("Dipinjam")
-            print(f"\nBuku berhasil dipinjam.")
+class Book:
+    def __init__(self, tittle, author, isbn):
+        self.tittle = tittle
+        self.author = author
+        self.isbn = isbn
+        self.is_borrowed = False
+    def borrow(self):
+        if not self.is_borrowed:
+            self.is_borrowed = True
+            print("\nBuku berhasil dipinjam.")
         else:
-            print(f"\nBuku sedang tidak tersedia/dipinjam.")
-    
-    def kembalikan_buku(self, tanggal_kembali):
-        if self.buku.status == "Dipinjam":
-            self.tanggal_kembali = tanggal_kembali
-            self.buku.ubah_status ("Tersedia")
-            print(f"\nBuku berhasil dikembalikan.")
+            print("\nBuku sudah dipinjam.")
+    def return_book(self):
+        if self.is_norrowed:
+            self.is_borrowed = False
+            print("\nBuku berhasil dikembalikan.")
         else:
-            print(f"\nBuku sudah tersedia.")
+            print("\nBuku sudah tersedia.")
 
-buku1 = Buku("B001", "Pemrograman Python", "Andi")
-anggota1 = Anggota("A001", "Zura", "Jl.Soebrantas", "081189093742")
+class Member:
+    def __init__(self, name, member_id):
+        self.name = name
+        self.member_id = member_id
+        self.borrowed_books = []
+    
+class staff:
+    def __init__(self, name, staff_id):
+        self.name = name
+        self.staff_id = staff_id
 
-peminjaman1 = Peminjaman("P001", anggota1, buku1, "04-03-2026")
+class BorrowTransaction:
+    def __init__(self, book, member, staff, borrow_date):
+        self.book = book
+        self.member = member
+        self.staff = staff
+        self.borrow_date = borrow_date
+        self.returned = False
+    def borrow_book(self):
+        if not self.book.is_borrowed:
+            self.book.borrow()
+            self.member.borrowed_books.append(self.book)
+            self.returned = False
+        else:
+            print("\nTransaksi gagal, buku sedang dipinjam.")
+    def return_book(self):
+        if not self.rerturned:
+            self.book.return_book()
+            if self.book in self.member.borrowed_books:
+                self.member.borrowed_books.remove(self.book)
+            self.returned = True
+        else:
+            print("\nBuku sudah dikembalikan sebelumnya.")
 
-peminjaman1.pinjam_buku()
-buku1.info_buku()
+book1 = Book("Pemrograman python", "Andi", "B001")
+member1 = Member("Zura", "M001")
+staff1 = staff("Budi", "S001")
 
-peminjaman1.kembalikan_buku("10-03-2026")
-buku1.info_buku()
+transaksi1 = BorrowTransaction(book1, member1, staff1, "04-03-2026")
+
+transaksi1.borrow_book()
+transaksi1.retrun_book()
