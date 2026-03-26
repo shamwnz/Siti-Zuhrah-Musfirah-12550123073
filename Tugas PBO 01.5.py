@@ -3,9 +3,9 @@ class BankAccount:
         self.owner = owner
         self.balance = balance
     
-    def deposit(self, ammount):
-        if ammount > 0:
-            self.balance += ammount
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
             return self.balance
         else:
             raise ValueError("Deposit amount must be greater than zero")
